@@ -10,11 +10,9 @@ const allowedOrigins = ['https://fascinating-crumble-60377b.netlify.app'];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not ' +
-        'allow access from the specified Origin.';
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
       return callback(new Error(msg), false);
     }
     return callback(null, true);
@@ -25,18 +23,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.post("/create-pdf", (req, res) => {
-  pdf.create(pdfsample(req.body), {}).toFile("Resume.pdf", (err) => {
+  console.log('Received request to create PDF with data:', req.body);
+
+  pdf.create(pdfsample(req.body), {}).toFile("Resume.pdf", (err, result) => {
     if (err) {
-      res.send(Promise.reject());
-      console.log(err);
+      console.error('Error creating PDF:', err);
+      return res.status(500).send(Promise.reject());
     }
+    console.log('PDF created successfully:', result);
     res.send(Promise.resolve());
-    console.log("Success");
   });
 });
 
 app.get("/fetch-pdf", (req, res) => {
-  res.sendFile(`${__dirname}/Resume.pdf`);
+  const filePath = `${__dirname}/Resume.pdf`;
+  console.log('Fetching PDF from:', filePath);
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      console.error('Error sending PDF file:', err);
+      res.status(500).send(err);
+    }
+  });
 });
 
 app.listen(port, () => {
