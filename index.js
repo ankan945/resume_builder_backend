@@ -6,7 +6,7 @@ const pdfsample = require('./pdf-sample');
 const app = express();
 const port = process.env.PORT || 4005;
 
-const allowedOrigins = ['https://fascinating-crumble-60377b.netlify.app'];
+const allowedOrigins = ['https://heroic-basbousa-e35e13.netlify.app/'];
 
 app.use(cors({
   origin: function (origin, callback) {
