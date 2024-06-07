@@ -26,9 +26,27 @@ app.post("/create-pdf",(req,res)=> {
 });
 
 app.get("/fetch-pdf", (req, res) => {
-    res.sendFile(`${__dirname}/Resume.pdf`);
+    const filePath = path.join(__dirname, 'Resume.pdf');
+  
+    // Check if the file exists
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+      if (err) {
+        console.error('File does not exist:', err);
+        return res.status(404).json({ success: false, message: 'File not found' });
+      }
+  
+      // Set the correct Content-Type header
+      res.setHeader('Content-Type', 'application/pdf');
+  
+      // Send the file
+      res.sendFile(filePath, (err) => {
+        if (err) {
+          console.error('Error sending file:', err);
+          res.status(500).json({ success: false, message: 'Error sending file' });
+        }
+      });
+    });
   });
-
 
 //app.use(express.static("../frontend/build"));
 
