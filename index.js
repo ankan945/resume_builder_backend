@@ -10,7 +10,7 @@ const app = express();
 const port = process.env.PORT || 4005;
 
 //app.use(cors());
-app.use(cors({credentials:true,origin:''}));
+app.use(cors({credentials:true,origin:'https://ankanresume.netlify.app/'}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
