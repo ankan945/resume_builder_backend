@@ -14,7 +14,7 @@ app.use(cors({
     credentials: true,
     origin: 'https://ankandebmyresume.netlify.app/',
     methods: ['GET', 'POST', 'OPTIONS'], // Ensure OPTIONS is included for preflight
-    allowedHeaders: ['Content-Type'] // Specify allowed headers
+    allowedHeaders: ['application/json'] // Specify allowed headers
 }));
 
 app.use(express.json());
