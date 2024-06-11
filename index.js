@@ -12,7 +12,7 @@ const port = process.env.PORT || 4005;
 
 app.use(cors({
     credentials: true,
-    origin: 'https://ankanresume.netlify.app/',
+    origin: 'https://ankandebmyresume.netlify.app/',
     methods: ['GET', 'POST', 'OPTIONS'], // Ensure OPTIONS is included for preflight
     allowedHeaders: ['Content-Type'] // Specify allowed headers
 }));
